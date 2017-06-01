@@ -85,9 +85,9 @@ class ExamBotDB:
 
         for module in modules:
             # First check whether the user has already set that module.
-            db_cursor.execute("SELECT * FROM users WHERE nick = ? \
+            self._db_cursor.execute("SELECT * FROM users WHERE nick = ? \
              AND module_code = ?", (nickname, module))
-            data = db_cursor.fetchone()
+            data = self._db_cursor.fetchone()
 
             # If not, we add it.
             if data is None:
@@ -112,11 +112,23 @@ class ExamBotDB:
 
 
     def get_exam_list(self):
-        """ Return the current list of exams.
+        """ Return the current list of exams, short code only for legacy reasons.
         """
 
-        exam_list = [i[1].encode("unicode-escape") for i
-         in self._db_cursor.execute("SELECT * FROM exams;")]
+        exam_list = [i[1] for i in self._db_cursor.execute("SELECT * FROM exams;")]
+
+        return exam_list
+
+
+    def get_full_exam_list(self):
+        """ Return the current list of exams, with full information.
+        """
+
+        exam_list = []
+        rows = self._db_cursor.execute("SELECT * FROM exams;")
+
+        for row in rows:
+            exam_list.append([row[0], row[1], row[2]])
 
         return exam_list
 

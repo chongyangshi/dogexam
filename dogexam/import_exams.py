@@ -2,16 +2,19 @@
 # Importing module exams from a CSV file into the database.
 # For formatting example, see data/example.csv.
 
+import os
 import csv
 import sys
 
 import dogexam.utils as utils
 import dogexam.db as db
 
-DB = db.ExamBotDB('data/exambot.db')
+script_path = os.path.dirname(os.path.realpath(__file__))
+db_path = os.path.join(script_path, 'data', 'exambot.db')
+DB = db.ExamBotDB(db_path)
 
 if len(sys.argv) != 2:
-    print("Usage: python import_exams.py EXAM_LIST.csv")
+    print("Usage: python -m dogexam.import_exams EXAM_LIST.csv")
     sys.exit()
 
 exam_list_file = sys.argv[1]

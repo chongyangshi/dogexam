@@ -14,6 +14,7 @@ class ExamBotCommandHandler:
         self._dbm = db.ExamBotDB()
         self._help_text = help_text
         self._module_list = self._dbm.get_exam_list()
+        self._module_list_full = self._dbm.get_full_exam_list() # Legacy reasons.
         self.nickname = nickname
 
 
@@ -213,12 +214,12 @@ class ExamBotCommandHandler:
                 module_in_question = cmdsplit[1]
 
                 # A module may have multiple exams, so we take the nearest one.
-                exams = [i for i in self._module_list if i[0].encode("unicode-escape") == module_in_question]
-                if len(modules) > 0:
+                exams = [i for i in self._module_list_full if i[1] == module_in_question]
+                if len(exams) > 0:
                     for exam in exams:
 
                         current_date = datetime.datetime.strptime(time.strftime("%Y-%m-%d"), "%Y-%m-%d")
-                        exam_time = datetime.datetime.strptime(exam[1], "%Y-%m-%d")
+                        exam_time = datetime.datetime.strptime(exam[0], "%Y-%m-%d")
                         response_next = ""
 
                         if exam_time.date() > current_date.date():
@@ -227,7 +228,7 @@ class ExamBotCommandHandler:
                                 response_next += "One day "
                             else:
                                 response_next += time_left + " days "
-                            response_next += "left! The exam is " + exam[2] + " (" + exam[0] + ") on " + exam[1] + "."
+                            response_next += "left! The exam is " + exam[2] + " (" + exam[1] + ") on " + exam[0] + "."
 
                             return response_next
 

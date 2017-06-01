@@ -55,35 +55,51 @@ class ExamBot(irc.bot.SingleServerIRCBot):
 
         channel = e.target
         return_message = ""
+        is_bridge = False
+        primary_command = ""
+        private_responses = ["add", "delete"]
+        source_nick = ""
 
         # Bridged messages.
         if e.source.nick.startswith(self.__bridge_nick):
+            is_bridge = True
             bridge_split = e.arguments[0].split(" ", 2)
             bridge_split[0] = bridge_split[0].strip()
             if bridge_split[1] == self._command_prefix and \
              bridge_split[0].startswith('<') and bridge_split[0].endswith('>'):
                 source_nick = bridge_split[0][1:-1] # The actual sender.
-                if len(a) > 2:
+                if len(bridge_split) > 2:
                     return_message = self.__handler.do_command(
                      bridge_split[2].strip(), source_nick)
+                    primary_command = bridge_split[2].strip().split(' ')[0]
                 else:
                     return_message = self.__handler.do_command("next",
                      source_nick)
+                    primary_command = "next"
 
         # Regular IRC messages.
         else:
             regular_split = e.arguments[0].split(" ", 1)
             if irc.strings.lower(regular_split[0]) == self._command_prefix:
+                source_nick = e.source.nick
                 if len(regular_split) > 1:
                     return_message = self.__handler.do_command(
-                     regular_split[1].strip(), e.source.nick)
+                     regular_split[1].strip(), source_nick)
+                    primary_command = regular_split[1].strip().split(' ')[0]
                 else:
                     return_message = self.__handler.do_command(
-                     "next", e.source.nick)
+                     "next", source_nick)
+                    primary_command = "next"
 
         # If there's any response, send response with notice.
         if return_message != "":
-            self.connection.notice(channel, return_message)
+            if is_bridge and (primary_command in private_responses):
+                pass
+            else:
+                if primary_command in private_responses:
+                    self.connection.notice(source_nick, return_message)
+                else:
+                    self.connection.notice(channel, return_message)
 
         return True
 

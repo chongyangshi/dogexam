@@ -1,7 +1,11 @@
 # Maintenance script for removing recorded exams and/or user selections.
 
+import os
 import dogexam.db as db
-DB = db.ExamBotDB('data/exambot.db')
+
+script_path = os.path.dirname(os.path.realpath(__file__))
+db_path = os.path.join(script_path, 'data', 'exambot.db')
+DB = db.ExamBotDB(db_path)
 
 if raw_input("Would you like to delete all exams\
  recorded by the system? [y/n]: ").lower() == "y":
