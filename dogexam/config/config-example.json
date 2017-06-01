@@ -1,0 +1,11 @@
+{
+  "command_prefix": "@exam",
+  "irc_server": "chat.freenode.net",
+  "irc_port": "6697",
+  "irc_use_tls": true,
+  "irc_nickname": "dogexam2",
+  "irc_password": "",
+  "irc_channels": ["#hacksoc", "#cs-york", "#cs-york-dev"],
+  "slack_bridge_nick_prefix": "york-hackbot",
+  "owner_nicks": ["icydoge"]
+}
