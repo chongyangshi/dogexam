@@ -6,7 +6,7 @@ As I have finally found time to refactor the codebase into a presentable state, 
 
 **dogexam** requires Python 3.3+ and the [irc](https://pypi.python.org/pypi/irc) library, as well as SQLite3.
 
-#Setup#
+# Setup #
 Clone this repository, and copy the following example files:
 
  - `dogexam/config/config-example.json` to `dogexam/config/config.json`
