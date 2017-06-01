@@ -1,10 +1,11 @@
 # The command handler for dogexam.
 
 import datetime
+import time
 from collections import OrderedDict
 
-import db
-import utils
+import dogexam.db as db
+import dogexam.utils as utils
 
 class ExamBotCommandHandler:
 

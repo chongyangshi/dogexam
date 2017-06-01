@@ -5,8 +5,8 @@
 import csv
 import sys
 
-import utils
-import db
+import dogexam.utils as utils
+import dogexam.db as db
 
 DB = db.ExamBotDB('data/exambot.db')
 

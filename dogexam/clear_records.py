@@ -1,6 +1,6 @@
 # Maintenance script for removing recorded exams and/or user selections.
 
-import db
+import dogexam.db as db
 DB = db.ExamBotDB('data/exambot.db')
 
 if raw_input("Would you like to delete all exams\

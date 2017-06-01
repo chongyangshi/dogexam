@@ -1,5 +1,6 @@
 # Exam reminder bot based on the example bot of Joel Rosdahl.
 
+import os
 import ssl
 import sys
 import irc.connection
@@ -7,8 +8,8 @@ import irc.bot
 import irc.strings
 from irc.client import ip_numstr_to_quad, ip_quad_to_numstr
 
-import handler
-import utils
+import dogexam.handler as handler
+import dogexam.utils as utils
 
 class ExamBot(irc.bot.SingleServerIRCBot):
 
@@ -59,7 +60,7 @@ class ExamBot(irc.bot.SingleServerIRCBot):
         if e.source.nick.startswith(self.__bridge_nick):
             bridge_split = e.arguments[0].split(" ", 2)
             bridge_split[0] = bridge_split[0].strip()
-            if bridge_split[1] == self._command_prefix and
+            if bridge_split[1] == self._command_prefix and \
              bridge_split[0].startswith('<') and bridge_split[0].endswith('>'):
                 source_nick = bridge_split[0][1:-1] # The actual sender.
                 if len(a) > 2:
@@ -119,7 +120,7 @@ def make_bot(config_file):
     else:
         ssl_factory = {}
 
-    dog = ExamBot(config['irc_channels'], config['irc_nickname'],
+    bot = ExamBot(config['irc_channels'], config['irc_nickname'],
      config['irc_server'], config['irc_port'], config['irc_password'],
      config['command_prefix'], config['slack_bridge_nick_prefix'],
      config['help_text'], **ssl_factory)
@@ -127,4 +128,5 @@ def make_bot(config_file):
     bot.start()
 
 if __name__ == "__main__":
-    make_bot('config/config.json')
+    script_path = os.path.dirname(os.path.realpath(__file__))
+    make_bot(os.path.join(script_path, 'config', 'config.json'))

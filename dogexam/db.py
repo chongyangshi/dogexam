@@ -1,12 +1,16 @@
 # The SQLite3 DB Manager for dogexam.
 
+import os
 import sqlite3
 
-import utils
+import dogexam.utils as utils
+
+script_path = os.path.dirname(os.path.realpath(__file__))
+default_db_path = os.path.join(script_path, 'data', 'exambot.db')
 
 class ExamBotDB:
 
-    def __init__(self, db_file="data/exambot.db"):
+    def __init__(self, db_file=default_db_path):
 
         self.__db_file = db_file
 
@@ -112,9 +116,9 @@ class ExamBotDB:
         """
 
         exam_list = [i[1].encode("unicode-escape") for i
-         in db_cursor.execute("SELECT * FROM exams;")]
+         in self._db_cursor.execute("SELECT * FROM exams;")]
 
-        return get_exam_list
+        return exam_list
 
 
     def get_modules(self, nickname):
@@ -123,11 +127,10 @@ class ExamBotDB:
         """
 
         exams = []
-        rows = db_cursor.execute("SELECT users.module_code, exams.date,\
+        rows = self._db_cursor.execute("SELECT users.module_code, exams.date,\
          exams.module_name FROM users LEFT JOIN exams ON \
          users.module_code = exams.module_code \
          WHERE nick = ? \
-         AND exams.module_resit = users.users_resit \
          ORDER BY date(exams.date) ASC", (nickname,))
 
         for row in rows:
