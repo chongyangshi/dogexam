@@ -27,7 +27,7 @@ class ExamBotCommandHandler:
 
         if cmd == "help":
             # Print help text.
-            return self.help_text
+            return self._help_text
 
         elif cmd == "date":
             # Print the bot's date, used for server timezone check.
