@@ -3,9 +3,10 @@
   "irc_server": "chat.freenode.net",
   "irc_port": "6697",
   "irc_use_tls": true,
-  "irc_nickname": "dogexam2",
+  "irc_nickname": "dogexam",
   "irc_password": "",
   "irc_channels": ["#hacksoc", "#cs-york", "#cs-york-dev"],
   "slack_bridge_nick_prefix": "york-hackbot",
-  "owner_nicks": ["icydoge"]
+  "owner_nicks": ["icydoge"],
+  "help_text": "Usage: @exam help | date | next | add MODULE1, MODULE2 | delete MODULE | time MODULE | all ; Detail and list of modules: https://ebornet.com/dogexam.html"
 }

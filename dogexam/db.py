@@ -7,6 +7,7 @@ import utils
 class ExamBotDB:
 
     def __init__(self, db_file="data/exambot.db"):
+
         self.__db_file = db_file
 
         if not utils.check_file_exists(self.__db_file):
@@ -104,6 +105,16 @@ class ExamBotDB:
 
         self.__db_conn.commit()
         return True
+
+
+    def get_exam_list(self):
+        """ Return the current list of exams.
+        """
+
+        exam_list = [i[1].encode("unicode-escape") for i
+         in db_cursor.execute("SELECT * FROM exams;")]
+
+        return get_exam_list
 
 
     def get_modules(self, nickname):
