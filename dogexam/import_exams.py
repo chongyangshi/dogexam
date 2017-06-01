@@ -35,7 +35,7 @@ with open(exam_list_file, 'r') as csvfile:
 print("The following exams will be imported:")
 for row in dataset:
     print(row)
-if raw_input("Confirm? [y/n]: ").lower() != "y":
+if input("Confirm? [y/n]: ").lower() != "y":
     print("Cancelled.")
     sys.exit()
 
