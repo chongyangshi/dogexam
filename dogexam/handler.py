@@ -239,11 +239,11 @@ class ExamBotCommandHandler:
 
             return ""
 
-
         elif cmd == "reload":
             # Reload the current exam list, useful for non-interrupting module addition.
             self._module_list = self._dbm.get_exam_list()
             self._module_list_full = self._dbm.get_full_exam_list() # Legacy reasons.
+            return ""
 
         else:
             return ""
