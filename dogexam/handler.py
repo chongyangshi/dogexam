@@ -222,13 +222,15 @@ class ExamBotCommandHandler:
                         exam_time = datetime.datetime.strptime(exam[0], "%Y-%m-%d")
                         response_next = ""
 
-                        if exam_time.date() > current_date.date():
+                        if exam_time.date() >= current_date.date():
                             time_left = str((exam_time.date() - current_date.date()).days)
                             if int(time_left) == 1:
-                                response_next += "One day "
+                                response_next += "One day left!"
+                            elif int(time_left) == 0:
+                                response_next += "It is today!"
                             else:
-                                response_next += time_left + " days "
-                            response_next += "left! The exam is " + exam[2] + " (" + exam[1] + ") on " + exam[0] + "."
+                                response_next += time_left + " days left!"
+                            response_next += " The exam is " + exam[2] + " (" + exam[1] + ") on " + exam[0] + "."
 
                             return response_next
 
