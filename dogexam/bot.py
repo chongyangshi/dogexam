@@ -63,11 +63,11 @@ class ExamBot(irc.bot.SingleServerIRCBot):
         # Bridged messages.
         if e.source.nick.startswith(self.__bridge_nick):
             is_bridge = True
-            bridge_split = e.arguments[0].split(" ", 2)
-            bridge_split[0] = bridge_split[0].strip()
+            bridge_split = e.arguments[0].split("> ", 2)
+            bridge_split[0] = bridge_split[0].strip() + '>' #Hacky way to support <id (name)> messages.
             if bridge_split[1] == self._command_prefix and \
              bridge_split[0].startswith('<') and bridge_split[0].endswith('>'):
-                source_nick = bridge_split[0][1:-1] # The actual sender.
+                source_nick = bridge_split[0][1:-1].split(" ")[0] # The actual sender.
                 if len(bridge_split) > 2:
                     return_message = self.__handler.do_command(
                      bridge_split[2].strip(), source_nick)
