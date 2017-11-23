@@ -65,13 +65,14 @@ class ExamBot(irc.bot.SingleServerIRCBot):
             is_bridge = True
             bridge_split = e.arguments[0].split("> ", 2)
             bridge_split[0] = bridge_split[0].strip() + '>' #Hacky way to support <id (name)> messages.
-            if bridge_split[1] == self._command_prefix and \
+            if bridge_split[1].startswith(self._command_prefix) and \
              bridge_split[0].startswith('<') and bridge_split[0].endswith('>'):
                 source_nick = bridge_split[0][1:-1].split(" ")[0] # The actual sender.
-                if len(bridge_split) > 2:
+                request_section = bridge_split[1].split(" ", 1)
+                if len(request_section) > 1:
                     return_message = self.__handler.do_command(
-                     bridge_split[2].strip(), source_nick)
-                    primary_command = bridge_split[2].strip().split(' ')[0]
+                     request_section[1].strip(), source_nick)
+                    primary_command = request_section[1].strip().split(' ')[0]
                 else:
                     return_message = self.__handler.do_command("next",
                      source_nick)
