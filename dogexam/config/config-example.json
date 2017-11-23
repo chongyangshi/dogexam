@@ -1,7 +1,7 @@
 {
   "command_prefix": "@exam",
   "irc_server": "chat.freenode.net",
-  "irc_port": "6697",
+  "irc_port": 6697,
   "irc_use_tls": true,
   "irc_nickname": "dogexam",
   "irc_password": "",
