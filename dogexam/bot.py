@@ -64,6 +64,8 @@ class ExamBot(irc.bot.SingleServerIRCBot):
         if e.source.nick.startswith(self.__bridge_nick):
             is_bridge = True
             bridge_split = e.arguments[0].split("> ", 2)
+            if len(bridge_split) < 2: # Fix empty message issues.
+                return True
             bridge_split[0] = bridge_split[0].strip() + '>' #Hacky way to support <id (name)> messages.
             if bridge_split[1].startswith(self._command_prefix) and \
              bridge_split[0].startswith('<') and bridge_split[0].endswith('>'):
