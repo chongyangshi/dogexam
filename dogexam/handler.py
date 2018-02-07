@@ -47,6 +47,7 @@ class ExamBotCommandHandler:
                 all_valid = True
                 some_valid = False
                 add_set = []
+                module_names = [i.upper() for i in module_names]
                 for module_name in module_names:
                     module_name = "".join(module_name.split())
                     if module_name not in self._module_list:
@@ -84,6 +85,7 @@ class ExamBotCommandHandler:
                 all_valid = True
                 some_valid = False
                 delete_set = []
+                module_names = [i.upper() for i in module_names]
                 for module_name in module_names:
                     module_name = "".join(module_name.split())
                     if module_name not in self._module_list:
@@ -211,7 +213,7 @@ class ExamBotCommandHandler:
 
             try:
                 cmdsplit = cmd.split(" ", 1)
-                module_in_question = cmdsplit[1]
+                module_in_question = cmdsplit[1].upper()
 
                 # A module may have multiple exams, so we take the nearest one.
                 exams = [i for i in self._module_list_full if i[1] == module_in_question]
