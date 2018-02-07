@@ -139,12 +139,17 @@ def make_bot(config_file):
     else:
         ssl_factory = {}
 
-    bot = ExamBot(config['irc_channels'], config['irc_nickname'],
-     config['irc_server'], config['irc_port'], config['irc_password'],
-     config['command_prefix'], config['slack_bridge_nick_prefix'],
-     config['help_text'], **ssl_factory)
+    while True:
+        try:
+            bot = ExamBot(config['irc_channels'], config['irc_nickname'],
+             config['irc_server'], config['irc_port'], config['irc_password'],
+             config['command_prefix'], config['slack_bridge_nick_prefix'],
+             config['help_text'], **ssl_factory)
+            bot.start()
 
-    bot.start()
+        except UnicodeDecodeError:
+            print("Encountered a unicode decode error due to unexpected client behaviour, restarting.")
+            pass
 
 if __name__ == "__main__":
     script_path = os.path.dirname(os.path.realpath(__file__))
