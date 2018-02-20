@@ -22,7 +22,7 @@ You may wish to run it under a virtual environment. Take care *not* to run it on
 
 Edit the configuration under `dogexam/config/config.json` to provide information such as the bot's nickname and nickserv password, the IRC server, and the channels the bot is to connect to.
 
-An example CSV list of exams can be found in `dogexam/data/example.csv`, format your list of exams according to this file, and import the exams into the databse by:
+An example CSV list of exams can be found in `dogexam/data/example.csv`, format your list of exams according to this file, and import the exams into the database by running:
 
     python -m dogexam.import_exams PATH/TO/EXAMS.csv
 
